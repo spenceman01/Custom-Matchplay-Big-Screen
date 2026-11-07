@@ -27,6 +27,9 @@ export const MOCK_TOURNAMENT = {
   tournamentId: 253855,
   name: "Night 12 — Spring Series",
   status: "not_started",
+  // Registration enabled, so test mode shows the RSVP check-in list.
+  // Remove this to preview the "No registration" active-player list.
+  rsvpConfiguration: { type: "public", status: "active" },
   players: MOCK_PLAYERS,
   arenas: MOCK_ARENAS,
 };

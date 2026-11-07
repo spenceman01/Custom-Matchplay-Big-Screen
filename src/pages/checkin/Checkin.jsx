@@ -8,6 +8,7 @@ import PanelHeader from "../../components/PanelHeader.jsx";
 import StatusStrip from "../../components/StatusStrip.jsx";
 import CheckinPanel from "./components/CheckinPanel.jsx";
 import SeriesStandingsPanel from "./components/SeriesStandingsPanel.jsx";
+import ActivePlayersPanel from "./components/ActivePlayersPanel.jsx";
 import "./Checkin.css";
 import { settings, getCommunityUrl } from "../../config.js";
 
@@ -48,6 +49,25 @@ function videoEmbedUrl() {
 function rsvpApiPath(session) {
   if (session.mode === "tournament") return `/tournaments/${session.tournamentId}/rsvps`;
   return `/series/${session.seriesId}/rsvps`;
+}
+
+/**
+ * True when the tournament's registration type is "No registration".
+ * Match Play omits rsvpConfiguration entirely in that case.
+ */
+function hasNoRegistration(tournament) {
+  const config = tournament.rsvpConfiguration ?? tournament.rsvp_configuration;
+  if (!config) return true;
+  const type = String(config.type || "").toLowerCase();
+  return type === "none" || type === "disabled";
+}
+
+/** Players whose tournament status is active, sorted by name. */
+function activeTournamentPlayers(tournament) {
+  return normalizeRows(tournament.players || [])
+    .filter(p => String(p.tournamentPlayer?.status ?? p.status ?? "active").toLowerCase() === "active")
+    .map(p => ({ _id: p.playerId ?? p.id, _name: p.name || `Player ${p.playerId ?? ""}` }))
+    .sort((a, b) => String(a._name).localeCompare(String(b._name)));
 }
 
 function extractTournamentResultValues(series, playerId, standingRow) {
@@ -135,6 +155,8 @@ export default function Checkin() {
   const [eventSubtitle, setEventSubtitle] = useState("Loading start time...");
   const [standings, setStandings] = useState([]);
   const [rsvps, setRsvps] = useState([]);
+  // null while the tournament uses registration; otherwise its active players.
+  const [activePlayers, setActivePlayers] = useState(null);
   const [rightView, setRightView] = useState("checkin");
   const [connectionStatus, setConnectionStatus] = useState("Loading...");
   const [logoError, setLogoError] = useState(false);
@@ -164,7 +186,7 @@ export default function Checkin() {
   useStandingsScroll(
     activeContainerRef,
     standingsInnerRef,
-    `${rightView}-${rsvps.length}-${standings.length}-${priorityMode}-${checkedCount}`,
+    `${rightView}-${rsvps.length}-${activePlayers?.length ?? "rsvp"}-${standings.length}-${priorityMode}-${checkedCount}`,
     {
       topPauseMs: SCROLL_CONFIG.topPauseMs,
       scrollMs: SCROLL_CONFIG.scrollMs,
@@ -190,7 +212,7 @@ export default function Checkin() {
   const refreshTournamentDetails = useCallback(async () => {
     if (!session.tournamentId) return;
     const payload = await apiGet(`/tournaments/${session.tournamentId}`, {
-      includePlayers: 1, includeSeries: 1, includeLocation: 1, _ts: Date.now(),
+      includePlayers: 1, includeSeries: 1, includeLocation: 1, includeRsvpConfiguration: 1, _ts: Date.now(),
     });
     const tournament = payload?.data || payload;
     if (!tournament) return;
@@ -198,6 +220,10 @@ export default function Checkin() {
     setEventSubtitle(formatEventStart(getTournamentStartValue(tournament)));
     setStandings([]);
     setRightView("checkin");
+
+    const noRegistration = hasNoRegistration(tournament);
+    setActivePlayers(noRegistration ? activeTournamentPlayers(tournament) : null);
+    return noRegistration;
   }, [session]);
 
   const refreshSeriesDetails = useCallback(async () => {
@@ -231,11 +257,6 @@ export default function Checkin() {
 
     setStandings(processed);
   }, [session, playersById]);
-
-  const refreshEventDetails = useCallback(async () => {
-    if (session.mode === "tournament") return refreshTournamentDetails();
-    return refreshSeriesDetails();
-  }, [session, refreshTournamentDetails, refreshSeriesDetails]);
 
   const refreshRsvps = useCallback(async () => {
     if (session.mode === "tournament" && !session.tournamentId) return;
@@ -294,8 +315,15 @@ export default function Checkin() {
       : `Series ${session.seriesId} · Tournament ${session.tournamentId}`
     );
 
-    await Promise.all([refreshEventDetails(), refreshRsvps()]);
-  }, [session, refreshEventDetails, refreshRsvps]);
+    if (session.mode === "tournament") {
+      // RSVPs are only fetched when the tournament actually uses registration.
+      const noRegistration = await refreshTournamentDetails();
+      if (noRegistration) setRsvps([]);
+      else await refreshRsvps();
+      return;
+    }
+    await Promise.all([refreshSeriesDetails(), refreshRsvps()]);
+  }, [session, refreshTournamentDetails, refreshSeriesDetails, refreshRsvps]);
 
   useEffect(() => {
     loadFontSettings(["center", "right"], "startscreen-font");
@@ -333,7 +361,10 @@ export default function Checkin() {
     ? (session.mode === "tournament" ? "Registered Players" : "Check-In Status")
     : "Series Standings";
 
-  const hasRightContent = rightView === "checkin" ? rsvps.length > 0 : standings.length > 0;
+  const showActivePlayers = session.mode === "tournament" && activePlayers !== null;
+  const hasRightContent = rightView === "checkin"
+    ? (showActivePlayers ? activePlayers.length > 0 : rsvps.length > 0)
+    : standings.length > 0;
 
   return (
     <div className="checkin-page">
@@ -387,9 +418,18 @@ export default function Checkin() {
               {!hasRightContent ? (
                 <div className="empty">
                   {rightView === "checkin"
-                    ? "Check-in status will appear here once RSVP data is available."
+                    ? (showActivePlayers
+                      ? "Players will appear here once they are added to the tournament."
+                      : "Check-in status will appear here once RSVP data is available.")
                     : "Series standings will appear here once results exist."}
                 </div>
+              ) : rightView === "checkin" && showActivePlayers ? (
+                <ActivePlayersPanel
+                  players={activePlayers}
+                  maxRows={MAX_CHECKIN}
+                  containerRef={checkinViewportRef}
+                  innerRef={standingsInnerRef}
+                />
               ) : rightView === "checkin" ? (
                 <CheckinPanel
                   rsvps={rsvps}

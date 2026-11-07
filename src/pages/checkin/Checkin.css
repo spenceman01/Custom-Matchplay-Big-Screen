@@ -367,3 +367,21 @@
   line-height: 0;
   padding-top: 0;
 }
+/* "No registration" tournaments: active player list instead of check-ins. */
+.checkin-page .players-summary {
+  background: rgba(var(--accent-rgb), 0.12);
+  border-color: rgba(var(--accent-rgb), 0.32);
+}
+
+.checkin-page .players-summary .checkin-big { color: var(--accent); }
+
+.checkin-page .checkin-row.active-player {
+  background: rgba(var(--accent-2-rgb), 0.08);
+  border: 1px solid rgba(var(--accent-2-rgb), 0.22);
+  opacity: 1;
+}
+
+.checkin-page .checkin-row.active-player .checkmark {
+  color: var(--accent-2);
+  font-size: 0.7em;
+}
