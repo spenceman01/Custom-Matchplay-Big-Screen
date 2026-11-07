@@ -190,7 +190,8 @@ Change venue-specific defaults in **`src/config.js`**, then restart `npm start` 
 | `appTitle`, `leagueTitle`, `finalsTitle` | Headings across the screens |
 | `logoUrl` | Venue logo for wallboard and check-in |
 | `communityUrl`, `communityLabel` | Community QR destination and label |
-| `playlistId` | Check-in YouTube playlist; set to `""` to hide it |
+| `twitchChannel` | Twitch channel shown in the check-in video area (e.g. `"northstarpinball"`). Takes priority over `playlistId`. Twitch only plays when the screen is opened on `localhost` or an HTTPS domain. |
+| `playlistId` | Check-in YouTube playlist, used when `twitchChannel` is empty; set both to `""` to hide the video |
 | `directors` | Default names for tournament-director badges |
 | `finals.headerImageUrl`, `finals.championImageUrl` | Finals artwork |
 | `finals.winnerAText`, `finals.winnerBText`, `finals.winnerBIcon` | Winner labels and icon |

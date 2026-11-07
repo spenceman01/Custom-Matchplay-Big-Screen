@@ -13,7 +13,10 @@ export const settings = {
   logoUrl: "/npc-logo.png", // Northstar Pinball Collective logo; any file in public/ works
   communityUrl: "", // blank points QR to the public GitHub README setup instructions
   communityLabel: "Community",
-  playlistId: "PLws6SPocL-bOeA2zePM1W7NpxH-V6zyiW", // default playlist; empty string hides video
+  // Check-in video area. A Twitch channel takes priority over the YouTube playlist;
+  // leave both empty to hide the video panel.
+  twitchChannel: "", // Twitch channel name, e.g. "northstarpinball" (from twitch.tv/northstarpinball)
+  playlistId: "PLws6SPocL-bOeA2zePM1W7NpxH-V6zyiW", // YouTube playlist, used only when twitchChannel is empty
   directors: [], // optional TD names, e.g. ["Jane Doe", "Sam Smith"]
   finals: {
     headerImageUrl: "/championship-trophy.svg", // empty string hides header art

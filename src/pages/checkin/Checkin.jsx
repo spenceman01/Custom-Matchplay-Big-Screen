@@ -24,9 +24,25 @@ const SCROLL_CONFIG = { topPauseMs: 3000, bottomPauseMs: 3000, scrollMs: 2500, s
 
 const apiGet = createApiGet(API_BASE);
 
-function registrationUrl(session) {
-  if (session.mode === "tournament") return `${MATCHPLAY_BASE}/tournaments/${session.tournamentId}/registrations`;
-  return `${MATCHPLAY_BASE}/series/${session.seriesId}/registrations`;
+/** Main Match Play page for the event (not the registration/RSVP page). */
+function tournamentUrl(session) {
+  if (session.tournamentId) return `${MATCHPLAY_BASE}/tournaments/${session.tournamentId}`;
+  return `${MATCHPLAY_BASE}/series/${session.seriesId}`;
+}
+
+/** Embed URL for the check-in video panel, or "" to hide it. */
+function videoEmbedUrl() {
+  const channel = String(settings.twitchChannel || "").trim().replace(/^(https?:\/\/)?(www\.)?twitch\.tv\//i, "").replace(/\/.*$/, "");
+  if (channel) {
+    // Twitch only plays inside pages whose hostname is listed as a parent.
+    const parent = window.location.hostname || "localhost";
+    return `https://player.twitch.tv/?channel=${encodeURIComponent(channel)}&parent=${encodeURIComponent(parent)}&autoplay=true&muted=true`;
+  }
+  if (settings.playlistId) {
+    const list = encodeURIComponent(settings.playlistId);
+    return `https://www.youtube-nocookie.com/embed/videoseries?list=${list}&autoplay=1&mute=1&loop=1&playlist=${list}&controls=0&rel=0&modestbranding=1&playsinline=1&cc_load_policy=1&hl=en&iv_load_policy=3`;
+  }
+  return "";
 }
 
 function rsvpApiPath(session) {
@@ -309,11 +325,12 @@ export default function Checkin() {
     return () => clearInterval(interval);
   }, [session, standings.length]);
 
-  const registrationQrUrl = qrUrl(registrationUrl(session));
+  const tournamentQrUrl = qrUrl(tournamentUrl(session));
+  const videoUrl = videoEmbedUrl();
   const discordQrUrl = qrUrl(DISCORD_URL);
 
   const rightPanelTitle = rightView === "checkin"
-    ? (session.mode === "tournament" ? "Tournament Check-In" : "Check-In Status")
+    ? (session.mode === "tournament" ? "Registered Players" : "Check-In Status")
     : "Series Standings";
 
   const hasRightContent = rightView === "checkin" ? rsvps.length > 0 : standings.length > 0;
@@ -329,7 +346,7 @@ export default function Checkin() {
             </div>
 
             <div className="brand-row">
-              <QrCard label="Register" src={registrationQrUrl} alt="Registration QR" />
+              <QrCard label="Tournament" src={tournamentQrUrl} alt="Tournament QR" />
               <div className="logo-box brand-logo-box">
                 {logoError ? (
                   <span>Logo not found: {settings.logoUrl}</span>
@@ -341,12 +358,12 @@ export default function Checkin() {
             </div>
           </div>
 
-          {settings.playlistId && <div className="panel video-panel">
+          {videoUrl && <div className="panel video-panel">
             <div className="video-wrap">
               <iframe
                 referrerPolicy="strict-origin-when-cross-origin"
-                src={`https://www.youtube-nocookie.com/embed/videoseries?list=${encodeURIComponent(settings.playlistId)}&autoplay=1&mute=1&loop=1&playlist=${encodeURIComponent(settings.playlistId)}&controls=0&rel=0&modestbranding=1&playsinline=1&cc_load_policy=1&hl=en&iv_load_policy=3`}
-                title={`${settings.venueName} playlist`}
+                src={videoUrl}
+                title={settings.twitchChannel ? `${settings.twitchChannel} on Twitch` : `${settings.venueName} playlist`}
                 allow="autoplay; encrypted-media; picture-in-picture"
                 allowFullScreen
               />
