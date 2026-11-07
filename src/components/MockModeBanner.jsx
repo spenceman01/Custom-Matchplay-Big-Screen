@@ -5,7 +5,7 @@ export default function MockModeBanner() {
       bottom: 0,
       left: 0,
       right: 0,
-      background: "#f97316",
+      background: "var(--npc-red)",
       color: "white",
       textAlign: "center",
       padding: "0.3em",

@@ -27,27 +27,27 @@
 }
 
 .wallboard-page .game-card {
-  background: linear-gradient(135deg, rgba(255,255,255,0.075), rgba(255,255,255,0.025));
-  border: 1px solid rgba(255,255,255,0.12);
+  background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.07), rgba(255,255,255,0.02));
+  border: 1px solid rgba(var(--accent-rgb), 0.2);
   border-radius: 0.55vw;
   padding: 0.42vw;
 }
 
 .wallboard-page .game-card.completed {
   background: linear-gradient(135deg, rgba(34, 197, 94, 0.20), rgba(20, 83, 45, 0.18));
-  border-color: rgba(74, 222, 128, 0.32);
+  border-color: rgba(var(--good-rgb), 0.32);
 }
 
 .wallboard-page .game-card.completed .arena-name {
-  -webkit-text-stroke: 0.035em #4ade80;
+  -webkit-text-stroke: 0.035em var(--good);
   text-shadow:
-    0 0 8px rgba(74, 222, 128, 0.85),
-    0 0 16px rgba(74, 222, 128, 0.45);
+    0 0 8px rgba(var(--good-rgb), 0.85),
+    0 0 16px rgba(var(--good-rgb), 0.45);
 }
 
 .wallboard-page .game-card.slow-alert {
-  border-color: rgba(251, 113, 133, 0.78);
-  box-shadow: 0 0 18px rgba(251, 113, 133, 0.20);
+  border-color: rgba(var(--danger-rgb), 0.78);
+  box-shadow: 0 0 18px rgba(var(--danger-rgb), 0.20);
 }
 
 .wallboard-page .game-meta {
@@ -71,13 +71,13 @@
 }
 
 .wallboard-page .game-timer {
-  color: var(--accent);
+  color: var(--accent-2);
   font-weight: 950;
   white-space: nowrap;
 }
 
-.wallboard-page .game-timer.warn { color: #f97316; }
-.wallboard-page .game-timer.danger { color: #fb7185; }
+.wallboard-page .game-timer.warn { color: var(--accent); }
+.wallboard-page .game-timer.danger { color: var(--danger); }
 .wallboard-page .game-timer.done { color: var(--muted); }
 
 .wallboard-page .players {
@@ -124,7 +124,7 @@
 .wallboard-page .player-score.result-strikes {
   color: var(--danger);
   letter-spacing: 0.16em;
-  text-shadow: 0 0 10px rgba(251, 113, 133, 0.28);
+  text-shadow: 0 0 10px rgba(var(--danger-rgb), 0.28);
 }
 
 .wallboard-page .td-badge {
@@ -132,8 +132,8 @@
   margin-right: 0.4em;
   padding: 0.08em 0.35em;
   border-radius: 999px;
-  background: rgba(250, 204, 21, 0.18);
-  border: 1px solid rgba(250, 204, 21, 0.55);
+  background: rgba(var(--accent-rgb), 0.18);
+  border: 1px solid rgba(var(--accent-rgb), 0.55);
   color: var(--accent);
   font-size: 0.72em;
   font-weight: 950;
@@ -165,7 +165,7 @@
   color: var(--danger);
   font-weight: 950;
   letter-spacing: 0.18em;
-  text-shadow: 0 0 10px rgba(251, 113, 133, 0.28);
+  text-shadow: 0 0 10px rgba(var(--danger-rgb), 0.28);
 }
 
 .wallboard-page .brand-panel {
@@ -280,16 +280,16 @@
 
 .wallboard-page .scroll-toggle.active {
   color: var(--accent);
-  border-color: rgba(250, 204, 21, 0.5);
-  box-shadow: 0 0 10px rgba(250, 204, 21, 0.25);
+  border-color: rgba(var(--accent-rgb), 0.5);
+  box-shadow: 0 0 10px rgba(var(--accent-rgb), 0.25);
 }
 
 .standing-row.cutoff-gold,
 .wallboard-page .standing-row.top-finals {
   background:
-    linear-gradient(120deg, rgba(250, 204, 21, 0.18), rgba(255, 255, 255, 0.05), rgba(250, 204, 21, 0.12));
-  border: 1px solid rgba(250, 204, 21, 0.35);
-  box-shadow: 0 0 14px rgba(250, 204, 21, 0.12);
+    linear-gradient(120deg, rgba(var(--accent-rgb), 0.18), rgba(255, 255, 255, 0.05), rgba(var(--accent-rgb), 0.12));
+  border: 1px solid rgba(var(--accent-rgb), 0.35);
+  box-shadow: 0 0 14px rgba(var(--accent-rgb), 0.12);
 }
 
 .standing-row.cutoff-silver {
@@ -310,9 +310,9 @@
 /* Official standings medals. Apply by placement number, never by row index:
    a tie for 3rd gets two bronze rows and no 4th-place purple row. */
 .wallboard-page .standing-row.standing-place-1 {
-  background: linear-gradient(120deg, rgba(250, 204, 21, .23), rgba(250, 204, 21, .07));
-  border: 1px solid rgba(250, 204, 21, .65);
-  box-shadow: 0 0 14px rgba(250, 204, 21, .16);
+  background: linear-gradient(120deg, rgba(var(--gold-rgb), .23), rgba(var(--gold-rgb), .07));
+  border: 1px solid rgba(var(--gold-rgb), .65);
+  box-shadow: 0 0 14px rgba(var(--gold-rgb), .16);
 }
 .wallboard-page .standing-row.standing-place-2 {
   background: linear-gradient(120deg, rgba(226, 232, 240, .22), rgba(148, 163, 184, .06));
@@ -320,12 +320,12 @@
   box-shadow: 0 0 12px rgba(203, 213, 225, .10);
 }
 .wallboard-page .standing-row.standing-place-3 {
-  background: linear-gradient(120deg, rgba(205, 127, 50, .28), rgba(154, 82, 35, .08));
-  border: 1px solid rgba(205, 127, 50, .64);
-  box-shadow: 0 0 12px rgba(205, 127, 50, .12);
+  background: linear-gradient(120deg, rgba(var(--deep-rgb), .32), rgba(var(--deep-rgb), .08));
+  border: 1px solid rgba(var(--deep-rgb), .75);
+  box-shadow: 0 0 12px rgba(var(--deep-rgb), .16);
 }
 .wallboard-page .standing-row.standing-place-4 {
-  background: linear-gradient(120deg, rgba(168, 85, 247, .25), rgba(107, 33, 168, .07));
-  border: 1px solid rgba(168, 85, 247, .60);
-  box-shadow: 0 0 12px rgba(168, 85, 247, .12);
+  background: linear-gradient(120deg, rgba(var(--accent-2-rgb), .25), rgba(var(--accent-2-rgb), .07));
+  border: 1px solid rgba(var(--accent-2-rgb), .60);
+  box-shadow: 0 0 12px rgba(var(--accent-2-rgb), .12);
 }

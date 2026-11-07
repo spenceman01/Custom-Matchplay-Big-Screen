@@ -15,7 +15,7 @@ const SECTION_LABEL = {
   fontWeight: 900,
   letterSpacing: "0.06em",
   textTransform: "uppercase",
-  color: "#a1a1aa",
+  color: "var(--muted)",
   marginBottom: "0.5rem",
 };
 
@@ -45,7 +45,7 @@ function Toggle({ active, onToggle }) {
         height: "32px",
         borderRadius: "999px",
         border: "none",
-        background: active ? "#facc15" : "rgba(255,255,255,0.18)",
+        background: active ? "var(--accent)" : "rgba(255,255,255,0.18)",
         cursor: "pointer",
         flexShrink: 0,
         transition: "background 0.15s",
@@ -59,7 +59,7 @@ function Toggle({ active, onToggle }) {
           width: "28px",
           height: "28px",
           borderRadius: "50%",
-          background: active ? "#09090b" : "#f4f4f5",
+          background: active ? "var(--bg)" : "var(--text)",
           transition: "left 0.15s",
           display: "block",
         }}
@@ -196,7 +196,7 @@ export default function DevToolsModal() {
         >
           <div>
             <div style={{ fontWeight: 800, fontSize: "0.88em" }}>Test Mode</div>
-            <div style={{ color: "#a1a1aa", fontSize: "0.72em", marginTop: "0.2rem" }}>
+            <div style={{ color: "var(--muted)", fontSize: "0.72em", marginTop: "0.2rem" }}>
               Mock API · no proxy required
             </div>
           </div>
@@ -229,7 +229,7 @@ export default function DevToolsModal() {
           <div style={OPTION_ROW}>
             <div>
               <div style={{ fontWeight: 800, fontSize: "0.88em" }}>Mode</div>
-              <div style={{ color: "#a1a1aa", fontSize: "0.72em", marginTop: "0.2rem" }}>
+              <div style={{ color: "var(--muted)", fontSize: "0.72em", marginTop: "0.2rem" }}>
                 Series or single tournament
               </div>
             </div>
@@ -250,7 +250,7 @@ export default function DevToolsModal() {
           <div style={OPTION_ROW}>
             <div>
               <div style={{ fontWeight: 800, fontSize: "0.88em" }}>Format</div>
-              <div style={{ color: "#a1a1aa", fontSize: "0.72em", marginTop: "0.2rem" }}>
+              <div style={{ color: "var(--muted)", fontSize: "0.72em", marginTop: "0.2rem" }}>
                 Scoring display style
               </div>
             </div>
@@ -267,7 +267,7 @@ export default function DevToolsModal() {
           <div style={OPTION_ROW}>
             <div>
               <div style={{ fontWeight: 800, fontSize: "0.88em" }}>Hide Completed</div>
-              <div style={{ color: "#a1a1aa", fontSize: "0.72em", marginTop: "0.2rem" }}>
+              <div style={{ color: "var(--muted)", fontSize: "0.72em", marginTop: "0.2rem" }}>
                 Remove finished games from view
               </div>
             </div>
@@ -287,7 +287,7 @@ export default function DevToolsModal() {
                 borderRadius: "8px",
                 border: "1px solid rgba(255,255,255,0.12)",
                 background: "rgba(0,0,0,0.28)",
-                color: "#f4f4f5",
+                color: "var(--text)",
                 padding: "0.65rem",
                 fontFamily: "monospace",
                 fontSize: "0.78em",

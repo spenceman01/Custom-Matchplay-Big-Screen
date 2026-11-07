@@ -122,8 +122,8 @@
   padding: 0.65vw;
   margin-bottom: 0.45vw;
   border-radius: 0.65vw;
-  background: rgba(74, 222, 128, 0.12);
-  border: 1px solid rgba(74, 222, 128, 0.28);
+  background: rgba(var(--good-rgb), 0.12);
+  border: 1px solid rgba(var(--good-rgb), 0.28);
   text-align: center;
 }
 
@@ -170,20 +170,20 @@
 
 .checkin-page .checkin-row.checked-in,
 .checkin-page .checkin-row.checked-paid {
-  background: rgba(74, 222, 128, 0.16);
-  border: 1px solid rgba(74, 222, 128, 0.28);
+  background: rgba(var(--good-rgb), 0.16);
+  border: 1px solid rgba(var(--good-rgb), 0.28);
   opacity: 1;
 }
 
 .checkin-page .checkin-row.checked-only {
-  background: rgba(56, 189, 248, 0.14);
-  border: 1px solid rgba(56, 189, 248, 0.28);
+  background: rgba(var(--accent-2-rgb), 0.14);
+  border: 1px solid rgba(var(--accent-2-rgb), 0.28);
   opacity: 1;
 }
 
 .checkin-page .checkin-row.paid-only {
-  background: rgba(249, 115, 22, 0.14);
-  border: 1px solid rgba(249, 115, 22, 0.32);
+  background: rgba(var(--accent-rgb), 0.14);
+  border: 1px solid rgba(var(--accent-rgb), 0.32);
   opacity: 1;
 }
 
@@ -259,8 +259,8 @@
 }
 
 .checkin-page .missing-checkin-section {
-  border-color: rgba(251, 113, 133, 0.28);
-  background: rgba(251, 113, 133, 0.07);
+  border-color: rgba(var(--danger-rgb), 0.28);
+  background: rgba(var(--danger-rgb), 0.07);
   display: flex;
   flex-direction: column;
   max-height: 32vh;
@@ -311,9 +311,9 @@
 .standing-row.cutoff-gold,
 .wallboard-page .standing-row.top-finals {
   background:
-    linear-gradient(120deg, rgba(250, 204, 21, 0.18), rgba(255, 255, 255, 0.05), rgba(250, 204, 21, 0.12));
-  border: 1px solid rgba(250, 204, 21, 0.35);
-  box-shadow: 0 0 14px rgba(250, 204, 21, 0.12);
+    linear-gradient(120deg, rgba(var(--accent-rgb), 0.18), rgba(255, 255, 255, 0.05), rgba(var(--accent-rgb), 0.12));
+  border: 1px solid rgba(var(--accent-rgb), 0.35);
+  box-shadow: 0 0 14px rgba(var(--accent-rgb), 0.12);
 }
 
 .standing-row.cutoff-silver {
@@ -334,9 +334,9 @@
 
 .checkin-page .standing-row.cutoff-gold {
   background:
-    linear-gradient(120deg, rgba(250, 204, 21, 0.18), rgba(255, 255, 255, 0.05), rgba(250, 204, 21, 0.12));
-  border: 1px solid rgba(250, 204, 21, 0.35);
-  box-shadow: 0 0 14px rgba(250, 204, 21, 0.12);
+    linear-gradient(120deg, rgba(var(--accent-rgb), 0.18), rgba(255, 255, 255, 0.05), rgba(var(--accent-rgb), 0.12));
+  border: 1px solid rgba(var(--accent-rgb), 0.35);
+  box-shadow: 0 0 14px rgba(var(--accent-rgb), 0.12);
 }
 
 .checkin-page .standing-row.cutoff-silver {
