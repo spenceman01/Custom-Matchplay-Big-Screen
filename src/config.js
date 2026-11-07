@@ -10,7 +10,7 @@ export const settings = {
   appTitle: "Custom Matchplay Big Screen",
   leagueTitle: "Pinball League",
   finalsTitle: "Pinball League Finals",
-  logoUrl: "/venue-logo.svg", // replace public/venue-logo.svg or point to another file in public/
+  logoUrl: "/npc-logo.png", // Northstar Pinball Collective logo; any file in public/ works
   communityUrl: "", // blank points QR to the public GitHub README setup instructions
   communityLabel: "Community",
   playlistId: "PLws6SPocL-bOeA2zePM1W7NpxH-V6zyiW", // default playlist; empty string hides video
